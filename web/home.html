@@ -1,0 +1,201 @@
+<!DOCTYPE html>
+<html lang="en">
+<head>
+    <meta charset="UTF-8">
+    <title>乳腺肿瘤分割系统-首页</title>
+    <link rel="stylesheet" type="text/css" href="css/home.css">
+</head>
+
+<body>
+
+<!--分割线-->
+<div class="boundary" style="left: 5%"></div>
+<div class="boundary" style="left: 27.5%"></div>
+<div class="boundary" style="left: 50%"></div>
+<div class="boundary" style="left: 72.5%"></div>
+<div class="boundary" style="left: 95%"></div>
+
+<div class="head">
+    <div class="menu-bar" style="display:flex">
+        <img class="logo" src="img/newLogo.png" alt="">
+        <h1 style="width:75%">&nbsp;&nbsp;&nbsp;多模态乳腺肿瘤诊断系统</h1>
+<!--        <img src="img/menu.png" width="75" height="60" style="margin-left:auto" alt="">-->
+        <button class="jmpBtn" onclick="window.location.href='detail.html'">详细诊断</button>
+        <h1 style="color: #AEAEAE">|&nbsp&nbsp</h1>
+        <div class="navigation" style="margin-left:auto">
+            <img class="userImg" src="img/doctor.png" alt="">
+            <h3>王 * *</h3>
+            <img src="img/xiala.png" width="15" height="10" alt="">
+        </div>
+    </div>
+</div>
+
+<div class="tableHeadLine">
+    <div class="tableHead"><h2 style="color:white" align="center">源图像</h2></div>
+    <div class="tableHead"><h2 style="color:white" align="center">检测结果</h2></div>
+    <div class="tableHead"><h2 style="color:white" align="center">分割结果</h2></div>
+    <div class="tableHead"><h2 style="color:white" align="center">多模态融合诊断结果</h2></div>
+</div>
+
+<!--右侧总体提交区域-->
+<div class="totalSubmitArea" id="totalSubmitArea">
+    <button type="submit" class="totalSubmitBtn" id="totalSubmitBtn">开始诊断</button>
+</div>
+
+<form action="" method="POST" enctype="multipart/form-data">
+    <div class="line">
+        <div class="wideBlock">
+            <h3 align="center">超声图像</h3>
+            <input type="file" id="csImg" accept="image/*" style="display:none"/>
+            <img src="img/jia.png" id="csImgPreview" class="wideBlockImg" alt="" onclick="fileInput1.click()">
+        </div>
+        <div class="wideBlock"><img id="csDetection" src="" alt=""></div>
+        <div class="wideBlock"><img id="csDivision" src="" alt=""></div>
+        <div class="wideBlock"></div>
+    </div>
+    <div class="subLine" style="padding-left: 6%"><h5>&nbsp;&nbsp;&nbsp;&nbsp;*点击+号上传</h5></div>
+
+    <div class="line">
+        <div class="wideBlock">
+            <h3 align="center">X射线(钼靶)</h3>
+            <input type="file" name="xrayImg" id="xrayImg" accept="image/*" style="display:none">
+            <img src="img/jia.png" id="xrayImgPreview" class="wideBlockImg" alt="" onclick="fileInput2.click()">
+        </div>
+        <div class="wideBlock"><img id="xrayDetection" src="" alt=""></div>
+        <div class="wideBlock"><img id="xrayDivision" src="" alt=""></div>
+        <div class="wideBlock"></div>
+    </div>
+    <div class="subLine" style="padding-left: 6%"><h5>&nbsp;&nbsp;&nbsp;&nbsp;*点击+号上传</h5></div>
+
+    <div class="line">
+        <div class="wideBlock">
+            <h3 align="center">MRI(核磁)</h3>
+            <input type="file" name="xrayImg" id="mriImg" accept="image/*" style="display:none">
+            <img src="img/jia.png" id="mriImgPreview" class="wideBlockImg" alt="" onclick="fileInput3.click()">
+        </div>
+        <div class="wideBlock"><img id="mriDetection" src="" alt=""></div>
+        <div class="wideBlock"><img id="mriDivision" src="" alt=""></div>
+        <div class="wideBlock"></div>
+    </div>
+    <div class="subLine" style="padding-left: 6%"><h5>&nbsp;&nbsp;&nbsp;&nbsp;*点击+号上传</h5></div>
+
+</form>
+
+</body>
+
+
+<script type="text/javascript">
+    function $(id) {
+        return document.getElementById(id);
+    }
+
+    const fileInput1 = $("csImg");
+    const image1 = $("csImgPreview");
+
+    fileInput1.addEventListener("change", function() {
+        const file = fileInput1.files[0];
+        const reader = new FileReader();
+        reader.addEventListener("load", function() {
+            image1.src = reader.result;
+        });
+        if (file) {
+            reader.readAsDataURL(file);
+        }
+    });
+
+    const fileInput2 = $("xrayImg");
+    const image2 = $("xrayImgPreview");
+
+    fileInput2.addEventListener("change", function() {
+        const file = fileInput2.files[0];
+        const reader = new FileReader();
+        reader.addEventListener("load", function() {
+            image2.src = reader.result;
+        });
+        if (file) {
+            reader.readAsDataURL(file);
+        }
+    });
+
+    const fileInput3 = $("mriImg");
+    const image3 = $("mriImgPreview");
+
+    fileInput3.addEventListener("change", function() {
+        const file = fileInput3.files[0];
+        const reader = new FileReader();
+        reader.addEventListener("load", function() {
+            image3.src = reader.result;
+        });
+        if (file) {
+            reader.readAsDataURL(file);
+        }
+    });
+
+    const totalSubmitBtn = $('totalSubmitBtn');
+    totalSubmitBtn.addEventListener('click', function (event) {
+        event.preventDefault();
+        // 检测第一张图片是否上传
+        if (fileInput1.files.length === 0) {
+            alert("请上传超声图像！");
+            return;
+        } else if (fileInput2.files.length === 0) {
+            alert("请上传X射线图像！");
+            return;
+        } else if (fileInput3.files.length === 0) {
+            alert("请上传MRI图像！");
+            return;
+        }
+
+        alert("运算中...");
+        setTimeout(function () {
+            alert("运算完成！");
+            replace();
+        }, 2000);
+    })
+
+    function replace() {
+        var buttonContainer = $('totalSubmitArea');
+        var oldButton = $('totalSubmitBtn');
+
+        var newButton = document.createElement('button');
+        newButton.id = "totalSubmitBtn";
+        newButton.textContent = '复诊';
+
+        newButton.addEventListener("click", function () {
+            window.location.reload();
+        })
+
+        buttonContainer.appendChild(newButton);
+
+        var text = document.createElement("div");
+        text.innerHTML = "属性：良性<br>分级：三级<br>概率：96.7%<br>";
+        text.id = "remindText";
+        oldButton.parentNode.replaceChild(text, oldButton);
+
+        var csDetection = $('csDetection');
+        csDetection.className = "result";
+        csDetection.src = "output_img/csDetection.png";
+        var csDivision = $('csDivision');
+        csDivision.className = "result";
+        csDivision.src = "output_img/csDivision.png";
+
+        var xrayDetection = $('xrayDetection');
+        xrayDetection.className = "result";
+        xrayDetection.src = "output_img/xrayDetection.png";
+        var xrayDivision = $('xrayDivision');
+        xrayDivision.className = "result";
+        xrayDivision.src = "output_img/xrayDivision.png";
+
+        var mriDetection = $('mriDetection');
+        mriDetection.className = "result";
+        mriDetection.src = "output_img/mriDetection.png";
+        var mriDivision = $('mriDivision');
+        mriDivision.className = "result";
+        mriDivision.src = "output_img/mriDivision.png";
+    }
+
+</script>
+
+</script>
+
+</html>

@@ -1,0 +1,237 @@
+<!DOCTYPE html>
+<html lang="en">
+<head>
+    <meta charset="UTF-8">
+    <title>乳腺肿瘤分割系统-详细诊断</title>
+    <link rel="stylesheet" type="text/css" href="css/home.css">
+</head>
+
+<body>
+
+<!--分割线-->
+<div class="boundary" style="left: 5%"></div>
+<div class="boundary" style="left: 20%"></div>
+<div class="boundary" style="left: 35%"></div>
+<div class="boundary" style="left: 50%"></div>
+<div class="boundary" style="left: 65%"></div>
+<div class="boundary" style="left: 80%"></div>
+<div class="boundary" style="left: 95%"></div>
+
+<div class="head">
+    <div class="menu-bar" style="display:flex">
+        <img class="logo" src="img/newLogo.png" alt="">
+        <h1 style="width:75%">&nbsp;&nbsp;多模态乳腺肿瘤诊断系统</h1>
+<!--        <img src="img/menu.png" width="75" height="60" style="margin-left:auto" alt="">-->
+        <button class="jmpBtn" onclick="window.location.href='home.html'">首页</button>
+        <h1 style="color: #AEAEAE">|&nbsp&nbsp</h1>
+        <div class="navigation" style="margin-left:auto">
+            <img class="userImg" src="img/doctor.png" alt="">
+            <h3>王 * *</h3>
+            <img src="img/xiala.png" width="15" height="10" alt="">
+        </div>
+    </div>
+</div>
+
+<div class="tableHeadLine">
+    <div class="tableHead"><h2 style="color:white" align="center">源图像</h2></div>
+    <div class="tableHead"><h2 style="color:white" align="center">检测结果</h2></div>
+    <div class="tableHead"><h2 style="color:white" align="center">分割结果</h2></div>
+    <div class="tableHead"><h2 style="color:white" align="center">配准结果</h2></div>
+    <div class="tableHead"><h2 style="color:white" align="center">图像融合</h2></div>
+    <div class="tableHead"><h2 style="color:white" align="center">诊断结果</h2></div>
+</div>
+
+<form action="" method="POST" enctype="multipart/form-data">
+    <div class="line">
+        <div class="block">
+            <h3 align="center">超声图像</h3>
+            <input type="file" id="csImg" accept="image/*" style="display:none"/>
+            <img src="img/jia.png" id="csImgPreview" alt="" onclick="fileInput1.click()">
+        </div>
+        <div class="block"><img id="csDetection" src="" alt=""></div>
+        <div class="block"><img id="csDivision" src="" alt=""></div>
+        <div class="block"><img id="csRegistration" src="" alt=""></div>
+        <div class="block"><img id="csMix" src="" alt=""></div>
+        <div class="invisibleBlock" style="">
+            <button type="submit" id="submitBtn1">开始诊断</button>
+        </div>
+    </div>
+    <div class="subLine"><h5>&nbsp;&nbsp;&nbsp;&nbsp;*点击+号上传</h5></div>
+</form>
+
+<form action="" method="POST" enctype="multipart/form-data">
+    <div class="line">
+        <div class="block">
+            <h3 align="center">X射线(钼靶)</h3>
+            <input type="file" name="xrayImg" id="xrayImg" accept="image/*" style="display:none">
+            <img src="img/jia.png" id="xrayImgPreview" alt="" onclick="fileInput2.click()">
+        </div>
+        <div class="block"><img id="xrayDetection" src="" alt=""></div>
+        <div class="block"><img id="xrayDivision" src="" alt=""></div>
+        <div class="block"><img id="xrayRegistration" src="" alt=""></div>
+        <div class="block"><img id="xrayMix" src="" alt=""></div>
+        <div class="invisibleBlock">
+            <button type="submit" id="submitBtn2">开始诊断</button>
+        </div>
+    </div>
+    <div class="subLine"><h5>&nbsp;&nbsp;&nbsp;&nbsp;*点击+号上传</h5></div>
+</form>
+
+<form action="" method="POST" enctype="multipart/form-data">
+    <div class="line">
+        <div class="block">
+            <h3 align="center">MRI(核磁)</h3>
+            <input type="file" name="xrayImg" id="mriImg" accept="image/*" style="display:none">
+            <img src="img/jia.png" id="mriImgPreview" alt="" onclick="fileInput3.click()">
+        </div>
+        <div class="block"><img id="mriDetection" src="" alt=""></div>
+        <div class="block"><img id="mriDivision" src="" alt=""></div>
+        <div class="block"><img id="mriRegistration" src="" alt=""></div>
+        <div class="block"><img id="mriMix" src="" alt=""></div>
+        <div class="invisibleBlock">
+            <button type="submit" id="submitBtn3">开始诊断</button>
+        </div>
+    </div>
+    <div class="subLine"><h5>&nbsp;&nbsp;&nbsp;&nbsp;*点击+号上传</h5></div>
+</form>
+
+</body>
+
+<script type="text/javascript">
+    function $(id) {
+        return document.getElementById(id);
+    }
+
+    const fileInput1 = $("csImg");
+    const image1 = $("csImgPreview");
+
+    fileInput1.addEventListener("change", function () {
+        const file = fileInput1.files[0];
+        const reader = new FileReader();
+        reader.addEventListener("load", function () {
+            image1.src = reader.result;
+        });
+        if (file) {
+            reader.readAsDataURL(file);
+        }
+    });
+
+    const fileInput2 = $("xrayImg");
+    const image2 = $("xrayImgPreview");
+
+    fileInput2.addEventListener("change", function () {
+        const file = fileInput2.files[0];
+        const reader = new FileReader();
+        reader.addEventListener("load", function () {
+            image2.src = reader.result;
+        });
+        if (file) {
+            reader.readAsDataURL(file);
+        }
+    });
+
+    const fileInput3 = $("mriImg");
+    const image3 = $("mriImgPreview");
+
+    fileInput3.addEventListener("change", function () {
+        const file = fileInput3.files[0];
+        const reader = new FileReader();
+        reader.addEventListener("load", function () {
+            image3.src = reader.result;
+        });
+        if (file) {
+            reader.readAsDataURL(file);
+        }
+    });
+
+    const submitBtn1 = $('submitBtn1');
+    submitBtn1.addEventListener('click', function (event) {
+        event.preventDefault();  // 阻止提交按钮导致的页面刷新
+        // 检测是否有图片上传
+        if (fileInput1.value === "") {
+            alert("请上传超声图像！");
+            return;
+        }
+        alert("超声图像运算中...");
+        setTimeout(function () {
+            alert("超声图像运算完成！");
+            replace1();
+        }, 1000);
+    })
+
+    function replace1() {
+        var csDetection = $('csDetection');
+        csDetection.className = "result";
+        csDetection.src = "output_img/csDetection.png";
+        var csDivision = $('csDivision');
+        csDivision.className = "result";
+        csDivision.src = "output_img/csDivision.png";
+        var csRegistration = $('csRegistration');
+        csRegistration.className = "result";
+        csRegistration.src = "output_img/csRegistration.png";
+        var csMix = $('csMix');
+        csMix.className = "result";
+        csMix.src = "output_img/csMix.png";
+    }
+
+    const submitBtn2 = $('submitBtn2');
+    submitBtn2.addEventListener('click', function (event) {
+        event.preventDefault();
+        if (fileInput2.value === "") {
+            alert("请上传X射线图像！");
+            return;
+        }
+        alert("X射线运算中...");
+        setTimeout(function () {
+            alert("X射线运算完成！");
+            replace2();
+        }, 1000);
+    })
+
+    function replace2() {
+        var xrayDetection = $('xrayDetection');
+        xrayDetection.className = "result";
+        xrayDetection.src = "output_img/xrayDetection.png";
+        var xrayDivision = $('xrayDivision');
+        xrayDivision.className = "result";
+        xrayDivision.src = "output_img/xrayDivision.png";
+        var xrayRegistration = $('xrayRegistration');
+        xrayRegistration.className = "result";
+        xrayRegistration.src = "output_img/xrayRegistration.png";
+        var xrayMix = $('xrayMix');
+        xrayMix.className = "result";
+        xrayMix.src = "output_img/xrayMix.png";
+    }
+
+    const submitBtn3 = $('submitBtn3');
+    submitBtn3.addEventListener('click', function (event) {
+        event.preventDefault();
+        if (fileInput3.value === "") {
+            alert("请上传MRI图像！");
+            return;
+        }
+        alert("MRI运算中...");
+        setTimeout(function () {
+            alert("XMRI运算完成！");
+            replace3();
+        }, 1000);
+    })
+
+    function replace3() {
+        var mriDetection = $('mriDetection');
+        mriDetection.className = "result";
+        mriDetection.src = "output_img/mriDetection.png";
+        var mriDivision = $('mriDivision');
+        mriDivision.className = "result";
+        mriDivision.src = "output_img/mriDivision.png";
+        var mriRegistration = $('mriRegistration');
+        mriRegistration.className = "result";
+        mriRegistration.src = "output_img/mriRegistration.png";
+        var mriMix = $('mriMix');
+        mriMix.className = "result";
+        mriMix.src = "output_img/mriMix.png";
+    }
+
+</script>
+
+</html>
